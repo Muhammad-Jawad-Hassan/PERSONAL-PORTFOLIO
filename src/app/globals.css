@@ -1,0 +1,946 @@
+@import "tailwindcss";
+
+:root {
+  --bg-void: #03050b;
+  --bg-base: #060912;
+  --bg-raised: #0c1120;
+  --bg-elevated: #131a2d;
+
+  --fg-default: #e8ecf5;
+  --fg-muted: #9aa3b7;
+  --fg-subtle: #5a6478;
+  --fg-faint: #2e3548;
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(0, 229, 255, 0.4);
+
+  --accent: #00e5ff;
+  --accent-bright: #5bfaff;
+  --accent-deep: #006b7a;
+  --accent-glow: rgba(0, 229, 255, 0.55);
+
+  --blueprint: #6cd3ff;
+
+  --success: #34d399;
+  --warn: #fbbf24;
+  --danger: #f87171;
+
+  --ease-cinematic: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-in-cinematic: cubic-bezier(0.85, 0, 0.4, 0);
+  --ease-out-cinematic: cubic-bezier(0.2, 0.6, 0.1, 1);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --glow-soft: 0 0 24px var(--accent-glow);
+  --glow-hard: 0 0 48px var(--accent-glow), 0 0 8px var(--accent-bright);
+}
+
+@theme inline {
+  --color-void: var(--bg-void);
+  --color-base: var(--bg-base);
+  --color-raised: var(--bg-raised);
+  --color-elevated: var(--bg-elevated);
+
+  --color-fg: var(--fg-default);
+  --color-muted: var(--fg-muted);
+  --color-subtle: var(--fg-subtle);
+  --color-faint: var(--fg-faint);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong: var(--border-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-deep: var(--accent-deep);
+  --color-blueprint: var(--blueprint);
+
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+
+  --color-background: var(--bg-base);
+  --color-foreground: var(--fg-default);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-geist-sans);
+
+  /* ──────────────────────────────────────────────────────────────────
+     Typography scale — single source of truth for the whole site.
+     Use these tokens via the generated utilities (e.g. text-display-xl)
+     instead of arbitrary clamp() values. Pair with font-display for
+     editorial weight + tracking.
+
+       text-display-xl   section / page hero titles
+       text-display-lg   large standalone showcase moments (rotating
+                         phrase, motto lines, big stats)
+       text-display-md   subsection emphasis, callouts
+       text-lead         lead body paragraphs (intro, bio)
+       text-base         body copy (default)
+       text-body-sm      caption / dense body
+       text-mono-label   chip labels — use with font-mono uppercase
+       text-mono-meta    smallest metadata — use with font-mono uppercase
+     ────────────────────────────────────────────────────────────────── */
+  --text-display-xl: clamp(2.25rem, 4.5vw, 3.5rem);
+  --text-display-xl--line-height: 0.96;
+  --text-display-xl--letter-spacing: -0.04em;
+
+  --text-display-lg: clamp(1.75rem, 3vw, 2.5rem);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.03em;
+
+  --text-display-md: clamp(1.25rem, 1.875vw, 1.5rem);
+  --text-display-md--line-height: 1.2;
+  --text-display-md--letter-spacing: -0.02em;
+
+  --text-lead: clamp(1rem, 1.2vw, 1.125rem);
+  --text-lead--line-height: 1.65;
+
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.55;
+
+  --text-mono-label: 0.6875rem;
+  --text-mono-label--line-height: 1;
+  --text-mono-label--letter-spacing: 0.32em;
+
+  --text-mono-meta: 0.625rem;
+  --text-mono-meta--line-height: 1;
+  --text-mono-meta--letter-spacing: 0.36em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--bg-base);
+  color: var(--fg-default);
+}
+
+body {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+::selection {
+  background: var(--accent-glow);
+  color: var(--fg-default);
+}
+
+.bg-cinematic {
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(0, 229, 255, 0.08) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(0, 229, 255, 0.04) 0%,
+      transparent 50%
+    ),
+    var(--bg-void);
+}
+
+.bg-blueprint-grid {
+  background-image:
+    linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@media (min-width: 768px) {
+  .bg-blueprint-grid {
+    background-size: 64px 64px;
+  }
+}
+
+.font-display {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, "SF Mono", monospace;
+}
+
+.glow-text {
+  text-shadow: 0 0 24px var(--accent-glow);
+}
+
+.glow-border {
+  box-shadow: var(--glow-soft);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom HUD cursor replaces the native pointer on fine-pointer devices.
+   Touch devices keep the native pointer. */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body {
+    cursor: none;
+  }
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  [data-cursor-pointer] {
+    cursor: none;
+  }
+}
+
+@keyframes scroll-cue-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(2px);
+    opacity: 1;
+  }
+}
+.scroll-cue-arrow {
+  display: inline-block;
+  animation: scroll-cue-bob 1.6s ease-in-out infinite;
+  font-size: 12px;
+  line-height: 1;
+}
+
+@keyframes project-detail-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.project-detail-fadein {
+  animation: project-detail-fadein 320ms cubic-bezier(0.2, 0.6, 0.1, 1) both;
+}
+
+@keyframes crt-sweep {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes crt-ping {
+  0% {
+    r: 3;
+    stroke-opacity: 0.95;
+    stroke-width: 1.4;
+  }
+  100% {
+    r: 28;
+    stroke-opacity: 0;
+    stroke-width: 0.4;
+  }
+}
+.crt-ping {
+  animation: crt-ping 1500ms cubic-bezier(0.2, 0.6, 0.1, 1) forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Blinking caret used in the About → Now panel */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret-blink {
+  display: inline-block;
+  width: 0.55ch;
+  height: 1em;
+  margin-left: 0.2ch;
+  vertical-align: -0.12em;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: caret-blink 1.05s steps(1, end) infinite;
+}
+
+/* Scan-beam reveal used by the About motto poster.
+   A vertical glowing beam sweeps left-to-right while the text behind it
+   uncovers via a synced clip-path. The combined effect reads as the line
+   being "etched" into view. */
+@keyframes about-scan-text {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes about-scan-beam {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% + 4px);
+    opacity: 0;
+  }
+}
+.about-scan-text {
+  display: inline-block;
+  animation: about-scan-text 1100ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.about-scan-beam {
+  position: absolute;
+  top: 0.05em;
+  bottom: 0.1em;
+  width: 3px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--accent-bright),
+    transparent
+  );
+  box-shadow:
+    0 0 14px var(--accent),
+    0 0 32px var(--accent-glow);
+  pointer-events: none;
+  animation: about-scan-beam 1100ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Mobile nav FAB — three colored micro-moons orbiting a cyan core,
+   each at its own period and direction so the glyph never reads as
+   a flat icon. Each orbit group is wrapped in an SVG <g translate=...>
+   so its local origin sits at the planet center, allowing a plain
+   rotate() animation to carry the dot around the orbit. */
+@keyframes mobile-fab-orbit-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mobile-fab-orbit-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+.mobile-fab-orbit-a {
+  animation: mobile-fab-orbit-cw 5.5s linear infinite;
+}
+.mobile-fab-orbit-b {
+  animation: mobile-fab-orbit-ccw 8.6s linear infinite;
+}
+.mobile-fab-orbit-c {
+  animation: mobile-fab-orbit-cw 13s linear infinite;
+}
+
+@keyframes mobile-fab-core-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+}
+.mobile-fab-core-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mobile-fab-core-pulse 2.6s ease-in-out infinite;
+}
+
+/* Skill ticker marquees: left and right scrolling lanes for the Toolkit
+   section. The track is rendered with the chip list duplicated 2x, so a
+   translateX of -50% loops seamlessly. Pair with `group-hover` to pause. */
+@keyframes skill-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes skill-marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Idle "alive" bob for cards at rest. Subtle vertical breathing.
+   Each card stages its own offset via animation-delay. */
+@keyframes card-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+.card-float {
+  animation: card-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Scanline sweep used on card hover. A thin cyan/colored band moves
+   down the card body, then loops. Pair with `--scan-color` for hue. */
+@keyframes card-scan-sweep {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(220%);
+    opacity: 0;
+  }
+}
+.card-scan-sweep {
+  animation: card-scan-sweep 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Card border highlight that traces around the perimeter (uses
+   conic-gradient masked to the border). Combined with a slow rotation. */
+@keyframes card-border-trace {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* ───────── Card entrance: holographic materialize ─────────
+   Multi-stage reveal: card boots up as a horizontal slit, expands open,
+   content emerges through blur, finally settles. Pairs with a one-shot
+   scan beam overlay and a border glow flash for a cinematic feel. */
+@keyframes card-materialize {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 64px, 0) scale(0.92);
+    clip-path: inset(50% 48% 50% 48% round 10px);
+    filter: blur(14px) brightness(2.4) saturate(1.8);
+  }
+  18% {
+    opacity: 1;
+    transform: translate3d(0, 52px, 0) scale(0.94);
+    clip-path: inset(49% 0 49% 0 round 10px);
+    filter: blur(8px) brightness(2) saturate(1.5);
+  }
+  45% {
+    opacity: 1;
+    transform: translate3d(0, 24px, 0) scale(0.97);
+    clip-path: inset(0 0 0 0 round 10px);
+    filter: blur(4px) brightness(1.4) saturate(1.2);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 6px, 0) scale(0.995);
+    filter: blur(1px) brightness(1.1) saturate(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    clip-path: inset(0 0 0 0 round 10px);
+    filter: blur(0) brightness(1) saturate(1);
+  }
+}
+.card-materialize {
+  animation: card-materialize 1200ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  will-change: transform, opacity, clip-path, filter;
+}
+
+/* One-shot scan beam that fires during the materialize. Travels top→bottom
+   exactly once, visible only while the card is resolving. */
+@keyframes card-beam-once {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(220%);
+    opacity: 0;
+  }
+}
+.card-beam-once {
+  animation: card-beam-once 1200ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Border glow flash during materialize. Border briefly pulses bright cyan
+   as the card resolves, then settles to its default rest state. */
+@keyframes card-edge-flash {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 1px transparent,
+      0 0 0 transparent;
+  }
+  35% {
+    box-shadow:
+      inset 0 0 0 1px var(--flash-color, rgba(0, 229, 255, 0.9)),
+      0 0 36px var(--flash-color, rgba(0, 229, 255, 0.55));
+  }
+  70% {
+    box-shadow:
+      inset 0 0 0 1px var(--flash-color, rgba(0, 229, 255, 0.4)),
+      0 0 14px var(--flash-color, rgba(0, 229, 255, 0.25));
+  }
+}
+.card-edge-flash {
+  animation: card-edge-flash 1200ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-materialize,
+  .card-materialize-soft,
+  .card-beam-once,
+  .card-edge-flash,
+  .card-float {
+    animation: none !important;
+  }
+}
+
+/* Soft materialize: same staged blur/transform reveal as card-materialize,
+   but without clip-path. Used by elements that will be hover-translated
+   afterwards (e.g. testimonials in a marquee) so the lift doesn't clip
+   against a persistent clip-path rectangle. */
+@keyframes card-materialize-soft {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 64px, 0) scale(0.92);
+    filter: blur(14px) brightness(2.4) saturate(1.8);
+  }
+  18% {
+    opacity: 1;
+    transform: translate3d(0, 52px, 0) scale(0.94);
+    filter: blur(8px) brightness(2) saturate(1.5);
+  }
+  45% {
+    opacity: 1;
+    transform: translate3d(0, 24px, 0) scale(0.97);
+    filter: blur(4px) brightness(1.4) saturate(1.2);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 6px, 0) scale(0.995);
+    filter: blur(1px) brightness(1.1) saturate(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0) brightness(1) saturate(1);
+  }
+}
+.card-materialize-soft {
+  animation: card-materialize-soft 1200ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  will-change: transform, opacity, filter;
+}
+
+/* ───────── About (Field Interview) ─────────
+   Q&A pairs reveal as you scroll. A cyan rail draws down the left of each
+   pair, the number types in, the question slides in, then the answer lines
+   rise from below with a blur drop. The motto closes with the existing
+   about-scan-* keyframes. */
+
+@keyframes about-rail-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.about-rail-draw {
+  transform-origin: top center;
+  animation: about-rail-draw 900ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+@keyframes about-rail-tip-drop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -8px) scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+.about-rail-tip-drop {
+  animation: about-rail-tip-drop 420ms cubic-bezier(0.4, 1.4, 0.5, 1) both;
+}
+
+@keyframes about-number-type {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.about-number-type {
+  animation: about-number-type 480ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+@keyframes about-question-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.about-question-slide {
+  animation: about-question-slide 560ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+@keyframes about-answer-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(8px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.about-answer-rise {
+  animation: about-answer-rise 760ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+/* Card deal: each Q&A card flies in from below with a subtle alternating
+   rotation, scaling up out of a blur. The --tilt custom prop is set per-card
+   so adjacent cards lean in opposite directions (field-note feel). */
+@keyframes about-card-deal {
+  0% {
+    opacity: 0;
+    transform: translateY(56px) rotate(var(--tilt, 0deg)) scale(0.93);
+    filter: blur(10px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+}
+.about-card-deal {
+  animation: about-card-deal 1000ms cubic-bezier(0.16, 0.84, 0.24, 1) backwards;
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+
+/* Background number "stamp": large faded numeral drops into the corner. */
+@keyframes about-card-num {
+  0% {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.84);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.about-card-num {
+  animation: about-card-num 620ms cubic-bezier(0.2, 0.7, 0.1, 1) backwards;
+}
+
+/* Corner pin punch: diamond pin pulses into the corner. */
+@keyframes about-card-pin {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+.about-card-pin {
+  animation: about-card-pin 520ms cubic-bezier(0.4, 1.4, 0.5, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-rail-draw,
+  .about-rail-tip-drop,
+  .about-number-type,
+  .about-question-slide,
+  .about-answer-rise,
+  .about-card-deal,
+  .about-card-num,
+  .about-card-pin {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ───────── Experience timeline (Trajectory) ─────────
+   Cards rise into place beside a glowing cyan "rod" with depth.
+   Each card stages a sequence of micro-animations on first reveal. */
+
+@keyframes experience-rod-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.experience-rod-draw {
+  transform-origin: top center;
+  animation: experience-rod-draw 1400ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+@keyframes experience-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.experience-card-enter {
+  animation: experience-card-enter 760ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+@keyframes experience-node-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.experience-node-pop {
+  animation: experience-node-pop 620ms cubic-bezier(0.4, 1.4, 0.5, 1) both;
+}
+
+@keyframes experience-spur-extend {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.experience-spur-extend {
+  transform-origin: left center;
+  animation: experience-spur-extend 460ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+@keyframes experience-card-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+.experience-card-scan {
+  animation: experience-card-scan 1100ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+@keyframes experience-tenure-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(var(--tenure-target, 1));
+  }
+}
+.experience-tenure-fill {
+  transform-origin: left center;
+  animation: experience-tenure-fill 1400ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes experience-chip-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.experience-chip-in {
+  animation: experience-chip-in 420ms cubic-bezier(0.2, 0.6, 0.1, 1) both;
+}
+
+@keyframes experience-now-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(91, 250, 255, 0.65),
+      0 0 18px rgba(0, 229, 255, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px rgba(91, 250, 255, 0),
+      0 0 24px rgba(0, 229, 255, 0.9);
+  }
+}
+.experience-now-pulse {
+  animation: experience-now-pulse 1900ms ease-out infinite;
+}
+
+/* ───────── Curtain loader ─────────
+   Full-screen panel whose hue subtly cycles through cool tones (cyan →
+   teal → indigo) while a loading bar fills. At the end, GSAP animates a
+   `clip-path: inset(0 50% 0 50%)` on the panel so it wipes open from the
+   center, revealing the home page beneath while the loader's name FLIPs
+   into the hero name's slot. */
+@property --curtain-h {
+  syntax: "<angle>";
+  initial-value: 200deg;
+  inherits: false;
+}
+
+.curtain-panel {
+  clip-path: inset(0 0 0 0);
+  background: var(--bg-void);
+}
+
+.curtain-color {
+  --curtain-h: 200deg;
+  background:
+    radial-gradient(
+      ellipse at 50% 28%,
+      hsla(var(--curtain-h), 78%, 24%, 0.55) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse at 28% 78%,
+      hsla(calc(var(--curtain-h) + 28deg), 70%, 18%, 0.5) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 72% 78%,
+      hsla(calc(var(--curtain-h) - 28deg), 80%, 20%, 0.5) 0%,
+      transparent 65%
+    ),
+    linear-gradient(180deg, #02050d 0%, #03070f 60%, #02050d 100%);
+  animation: curtain-hue 7.5s ease-in-out infinite;
+}
+
+@keyframes curtain-hue {
+  0% {
+    --curtain-h: 200deg;
+  }
+  33% {
+    --curtain-h: 232deg;
+  }
+  66% {
+    --curtain-h: 174deg;
+  }
+  100% {
+    --curtain-h: 200deg;
+  }
+}
+
+.curtain-seam {
+  width: 1px;
+  transform: translateX(-50%);
+  transform-origin: center;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--accent-bright) 18%,
+    var(--accent) 50%,
+    var(--accent-bright) 82%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 14px var(--accent-glow),
+    0 0 36px rgba(0, 229, 255, 0.25);
+}
+
+.curtain-bar-fill {
+  background: linear-gradient(
+    90deg,
+    var(--accent-deep) 0%,
+    var(--accent) 50%,
+    var(--accent-bright) 100%
+  );
+  box-shadow: 0 0 18px var(--accent-glow);
+}
+
